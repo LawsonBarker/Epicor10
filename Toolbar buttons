@@ -1,0 +1,21 @@
+Toolbar click
+
+	private void QuoteForm_BeforeToolClick(object sender, Ice.Lib.Framework.BeforeToolClickEventArgs args)
+	{
+
+		//EpiMessageBox.Show(args.Tool.Key);
+		switch (args.Tool.Key)
+		{
+			case "CreateSalesOrderTool":
+				//EpiMessageBox.Show(args.Tool.Key);
+				EpiDataView edv2 = ((EpiDataView)(this.oTrans.EpiDataViews["QuoteHed"]));
+				var prodCat = edv2.dataView[edv2.Row]["ProductCat_c"].ToString();
+				//DataRow editRow = edv2.CurrentDataRow;
+				if((edv2.dataView[edv2.Row]["ProjectID_c"].ToString().Trim() == "") && (!prodCat.Contains("Stock")))
+			//	if((edv2.dataView[edv2.Row]["ProjectID_c"].ToString().Trim() == "") && ((prodCat.Contains("Custom")) ||(prodCat.Contains("Complex"))))
+				{
+				throw new UIException("This Quote needs a Project created for it\r\nOr it needs to be linked to an existing one");	
+				//EpiMessageBox.Show(args.Tool.Key);
+				}
+				break;
+		}
