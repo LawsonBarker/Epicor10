@@ -1,0 +1,18 @@
+// Send emails from code in BPM
+// Can be used in Method and Data directives
+// C#
+ 
+ 
+ 
+ var mailer = this.GetMailer(async: false);  // can be set to true
+ var message = new Ice.Mail.SmtpMail();
+     message.SetFrom("do-not-reply@test.com");
+     message.SetTo(someone@test.com);
+ //    message.SetReplyTo(someone@test.com);
+ //    message.SetCC(someone@test.com);
+ //    message.SetBcc(someone@test.com); 
+     message.SetSubject("Hi");
+     message.SetBody("Hi");
+ //    message.IsBodyHtml = true;
+ //    message.Priority = System.Net.Mail.MailPriority.High;
+     mailer.Send(message);
