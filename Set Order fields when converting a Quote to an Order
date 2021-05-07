@@ -3,7 +3,7 @@
 // We use a Method Directive on the Erp.Quote.CreateOrder directive, and use a Post-Processing type
 // The Post-Processing already has the orderNum variable available in it already
 
-//Sets SO fields
+//Sets OrderHed fields
 var order = Db.OrderHed.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).FirstOrDefault(); // this gets the OrderHed
 if(order != null)
 { 
@@ -13,7 +13,7 @@ if(order != null)
 
 
 
-//Sets SO fields from QuoteHed to OrderHed
+//Sets OrderHed from QuoteHed to OrderHed
 var quoteNum = Db.OrderDtl.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).Select(x => x.QuoteNum).FirstOrDefault(); //this gets the quote number
 var order = Db.OrderHed.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).FirstOrDefault(); // this gets the OrderHed
 if(quoteNum != null)
@@ -27,7 +27,7 @@ if(quoteNum != null)
 
 
 
-//Sets SO detail fields 
+//Sets OrderDtl fields 
 var OrderDtls = Db.OrderDtl.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).ToList();
 if(OrderDtl != null)
 {
