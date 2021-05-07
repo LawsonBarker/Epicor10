@@ -1,0 +1,80 @@
+// ways to set fields when converting a quote to a sales order using the quote order wizard in the quote module 
+// using a Post method directive 
+// We use a Method Directive on the Erp.Quote.CreateOrder directive, and use a Post-Processing type
+// The Post-Processing already has the orderNum variable available in it already
+
+//Sets SO fields
+var order = Db.OrderHed.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).FirstOrDefault(); // this gets the OrderHed
+if(order != null)
+{ 
+    order.field1Name = "value"; 
+    order.field2Name = "value2;  
+}
+
+
+
+//Sets SO fields from QuoteHed to OrderHed
+var quoteNum = Db.OrderDtl.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).Select(x => x.QuoteNum).FirstOrDefault(); //this gets the quote number
+var order = Db.OrderHed.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).FirstOrDefault(); // this gets the OrderHed
+if(quoteNum != null)
+{ 
+  var quote = Db.QuoteHed.Where(q => q.Company == Session.CompanyID && q.QuoteNum == quoteNum).Select(x => new {x.field1Name, x.field2Name}).FirstOrDefault();       
+  if(quote != null)
+    {   
+      order.field1Name = quote.field1Name; 
+      order.field2Name = quote.field2Name;   
+    }
+
+
+
+//Sets SO detail fields 
+var OrderDtls = Db.OrderDtl.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).ToList();
+if(OrderDtl != null)
+{
+  foreach( var OrderDtl in OrderDtls)
+  {
+    OrderDtl.field1Name = "value"; // or other reference
+  }
+}
+
+
+
+//Sets SO detail fields from quoteDtls
+
+var orderDtls = Db.OrderDtl.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).ToList();
+if(orderDtls != null)
+{
+  foreach(var orderDtl in orderDtls)
+  {
+    var quoteDtl = Db.QuoteDtl.Where(qd => qd.Company == Session.CompanyID && qd.QuoteNum == orderDtl.QuoteNum  && qd.QuoteLine == orderDtl.QuoteLine).FirstOrDefault();  // this will pull all fields from quote detail you may want to limit this
+
+    orderDtl.Fieldtoupdate = quoteDtl.fieldName;
+  }
+}
+ 
+
+//Sets SO detail fields from quoteDtls (limited fields)
+
+var orderDtls = Db.OrderDtl.Where(o => o.Company == Session.CompanyID && o.OrderNum == orderNum).ToList();
+if(orderDtls != null)
+{
+  foreach( var orderDtl in orderDtls)
+  {
+    var quoteDtl = Db.QuoteDtl.Where(qd => qd.Company == Session.CompanyID && qd.QuoteNum == orderDtl.QuoteNum  && qd.QuoteLine == orderDtl.QuoteLine).Select(x => new{x.field1Name, x.field2Name}).FirstOrDefault();
+   
+    orderDtl.Field1toupdate = quoteDtl.field1Name;
+    orderDtl.Field2toupdate = quoteDtl.field2Name;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
