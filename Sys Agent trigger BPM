@@ -1,0 +1,5 @@
+bool tvSYS = ttSysAgentSched.Any(s => s.Updated() && ttSysAgentSched.Any(s1 => s1.Unchanged() && s1.SysRowID == s.SysRowID && s1.LastRunOn != s.LastRunOn && s.AgentSchedNum == 175297));
+if (tvSYS == true)
+{
+  // Do stuff here
+}
