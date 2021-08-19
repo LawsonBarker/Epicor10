@@ -8,7 +8,7 @@ var order = Db.OrderHed.Where(o => o.Company == Session.CompanyID && o.OrderNum 
 if(order != null)
 { 
     order.field1Name = "value"; 
-    order.field2Name = "value2;  
+    order.field2Name = "value2";  
 }
 
 
@@ -24,7 +24,7 @@ if(quoteNum != null)
       order.field1Name = quote.field1Name; 
       order.field2Name = quote.field2Name;   
     }
-
+}
 
 
 //Sets OrderDtl fields 
